@@ -1,6 +1,8 @@
+import { SearchCity } from 'components/SearchCity';
+
 const App = () => {
   return (
-    <div>Hello world</div>
+    <SearchCity />
   );
 };
 
