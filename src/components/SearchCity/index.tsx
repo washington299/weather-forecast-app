@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
 	Box,
 	HStack,
@@ -8,12 +9,11 @@ import {
 	InputRightElement,
 } from '@chakra-ui/react';
 import { SearchIcon, SunIcon } from '@chakra-ui/icons';
-import { useRecoilState } from 'recoil';
 
-import { cityNameState } from 'state/atoms';
+import { SearchCityProps } from './types';
 
-export const SearchCity = () => {
-	const [cityName, setCityName] = useRecoilState(cityNameState);
+export const SearchCity = ({ handleSearchClick }: SearchCityProps) => {
+	const [cityName, setCityName] = useState('');
 
 	return (
 		<Box as="header" my={8} p={10} bg="blue.800" borderRadius="3xl">
@@ -29,7 +29,10 @@ export const SearchCity = () => {
 					value={cityName}
 					onChange={(e) => setCityName(e.target.value)}
 				/>
-				<InputRightElement children={<SearchIcon color='white' cursor="pointer" />} />
+				<InputRightElement
+					children={<SearchIcon color='white' cursor="pointer" />}
+					onClick={() => handleSearchClick(cityName)}
+				/>
 			</InputGroup>
 		</Box>
 	);
