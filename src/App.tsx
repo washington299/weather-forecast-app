@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Container, Stack } from '@chakra-ui/react';
+import { useSetRecoilState } from 'recoil';
 
 import { getCityLatAndLon, getCityWheater } from 'services/queries';
+
+import { cityNameState } from 'state/atoms';
 
 import { SearchCity } from 'components/SearchCity';
 import { WeatherResult } from 'components/WeatherResult';
@@ -14,6 +17,8 @@ const App = () => {
 	const [cityData, setCityData] = useState<CityDataProps>({} as CityDataProps);
 	const [weatherData, setWeatherData] = useState<WeatherDataProps[]>([]);
 	const [loads, setLoads] = useState({ cityLoading: false, watherLoading: false });
+
+	const setState = useSetRecoilState(cityNameState);
 
 	const handleSearchClick = async (city: string) => {
 		setLoads(loads => ({ ...loads, cityLoading: true }));
@@ -51,6 +56,7 @@ const App = () => {
 				console.error(error);
 			}
 
+			setState(cityData.name);
 			setLoads(loads => ({ ...loads, watherLoading: false }));
 		};
 

@@ -1,5 +1,5 @@
 import { Fragment } from 'react';
-import { Box, HStack, VStack, Center, Text, Image, Spinner } from "@chakra-ui/react";
+import { Box, HStack, VStack, Center, Text, Heading, Image, Spinner } from "@chakra-ui/react";
 import { useRecoilValue } from 'recoil';
 
 import { cityNameState } from 'state/atoms';
@@ -12,7 +12,7 @@ export const WeatherSidebar = ({ isLoading, data }: WeatherSidebarProps) => {
 	const cityName = useRecoilValue(cityNameState);
 
 	return (
-		<Box w={{ base: 'full', lg: '350px' }} p={4} bg="blue.800" borderRadius="3xl">
+		<Box w={{ base: 'full', lg: '350px' }} py={4} bg="blue.800" borderRadius="3xl">
 			{isLoading ? (
 				<Center my={10}>
 					<Spinner size="xl" color="blue.400" />
@@ -21,7 +21,7 @@ export const WeatherSidebar = ({ isLoading, data }: WeatherSidebarProps) => {
 				<Fragment>
 					{data.length > 0 ? (
 						<Fragment>
-							<Text>{cityName}</Text>
+							<Heading as="h2" fontSize="2xl" px={6} mb={4}>{cityName}</Heading>
 
 							{data.map((weatherInfo) => {
 								const { temp_min, temp_max } = weatherInfo.main;
@@ -29,7 +29,13 @@ export const WeatherSidebar = ({ isLoading, data }: WeatherSidebarProps) => {
 								const day = new Date(weatherInfo.dt_txt).getDay();
 
 								return (
-									<HStack key={day} justifyContent="space-between">
+									<HStack
+										key={day}
+										justifyContent="space-between"
+										px={4}
+										cursor="pointer"
+										_hover={{ bg: "blue.900" }}
+									>
 										<HStack>
 											<Image
 												src={`http://openweathermap.org/img/wn/${icon}@2x.png`}
