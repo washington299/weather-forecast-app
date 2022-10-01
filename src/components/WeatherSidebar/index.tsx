@@ -1,8 +1,8 @@
 import { Fragment } from 'react';
 import { Box, HStack, VStack, Center, Text, Heading, Image, Spinner } from "@chakra-ui/react";
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 
-import { cityNameState } from 'state/atoms';
+import { cityNameState, selectedDayForecastState } from 'state/atoms';
 
 import { getWeekDay } from 'utils/formatDate';
 
@@ -10,6 +10,7 @@ import { WeatherSidebarProps } from './types';
 
 export const WeatherSidebar = ({ isLoading, data }: WeatherSidebarProps) => {
 	const cityName = useRecoilValue(cityNameState);
+	const setSelectedDayForecast = useSetRecoilState(selectedDayForecastState);
 
 	return (
 		<Box w={{ base: 'full', lg: '350px' }} py={4} bg="blue.800" borderRadius="3xl">
@@ -35,6 +36,7 @@ export const WeatherSidebar = ({ isLoading, data }: WeatherSidebarProps) => {
 										px={4}
 										cursor="pointer"
 										_hover={{ bg: "blue.900" }}
+										onClick={() => setSelectedDayForecast(weatherInfo)}
 									>
 										<HStack>
 											<Image
