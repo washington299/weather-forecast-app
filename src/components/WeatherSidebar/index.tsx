@@ -12,6 +12,11 @@ export const WeatherSidebar = ({ isLoading, data }: WeatherSidebarProps) => {
 	const cityName = useRecoilValue(cityNameState);
 	const setSelectedDayForecast = useSetRecoilState(selectedDayForecastState);
 
+	const formatedWeatherList = data.map((weather, index) => ({
+		...weather,
+		dt_txt: index === 0 ? "Today" : index === 1 ? "Tomorrow" : getWeekDay(new Date(weather.dt_txt).getDay()),
+	}));
+
 	return (
 		<Box w={{ base: 'full', lg: '350px' }} py={4} bg="blue.800" borderRadius="3xl">
 			{isLoading ? (
@@ -20,14 +25,14 @@ export const WeatherSidebar = ({ isLoading, data }: WeatherSidebarProps) => {
 				</Center>
 			) : (
 				<Fragment>
-					{data.length > 0 ? (
+					{formatedWeatherList.length > 0 ? (
 						<Fragment>
 							<Heading as="h2" fontSize="2xl" px={6} mb={4}>{cityName}</Heading>
 
-							{data.map((weatherInfo) => {
+							{formatedWeatherList.map((weatherInfo) => {
 								const { temp_min, temp_max } = weatherInfo.main;
 								const { description, icon } = weatherInfo.weather[0];
-								const day = new Date(weatherInfo.dt_txt).getDay();
+								const day = new Date(weatherInfo.dt_txt).getDay() || weatherInfo.dt_txt;
 
 								return (
 									<HStack
@@ -46,7 +51,7 @@ export const WeatherSidebar = ({ isLoading, data }: WeatherSidebarProps) => {
 												h="60px"
 											/>
 											<VStack alignItems="normal" spacing={0}>
-												<Text fontSize="xs">{getWeekDay(day)}</Text>
+												<Text fontSize="xs">{day}</Text>
 												<Text>{description}</Text>
 											</VStack>
 										</HStack>

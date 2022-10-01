@@ -3,13 +3,11 @@ import { useRecoilValue } from 'recoil';
 
 import { selectedDayForecastState } from 'state/atoms';
 
-import { getWeekDay } from 'utils/formatDate';
-
 export const WeatherResult = () => {
 	const dayWeatherData = useRecoilValue(selectedDayForecastState);
 
 	return (
-		<Box p={10} bg="blue.800" borderRadius="3xl" flex={1}>
+		<Box p={10} bg="blue.800" borderRadius="3xl" flex={1} mb={{ base: 8, md: 0 }}>
 			{Object.keys(dayWeatherData).length > 0 ? (
 				<Stack direction={{ base: "column", md: "row" }}>
 					<Image
@@ -19,7 +17,7 @@ export const WeatherResult = () => {
 						h="250px"
 					/>
 					<VStack w="full" alignItems="normal" spacing={4}>
-						<Text fontSize="3xl" mb={4}>{getWeekDay(new Date(dayWeatherData?.dt_txt || "").getDay())}</Text>
+						<Text fontSize="3xl" mb={4}>{dayWeatherData?.dt_txt}</Text>
 						<HStack alignItems="normal" justifyContent="space-between">
 							<Text fontSize="lg">{dayWeatherData.weather[0].description}</Text>
 							<Text fontSize="xl">
