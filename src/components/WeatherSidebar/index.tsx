@@ -4,7 +4,6 @@ import { useRecoilValue, useRecoilState } from 'recoil';
 
 import { cityNameState, selectedDayForecastState } from 'state/atoms';
 
-import { getWeekDay } from 'utils/formatDate';
 
 import { WeatherSidebarProps } from './types';
 
@@ -12,16 +11,11 @@ export const WeatherSidebar = ({ isLoading, data }: WeatherSidebarProps) => {
 	const cityName = useRecoilValue(cityNameState);
 	const [selectedDayForecast, setSelectedDayForecast] = useRecoilState(selectedDayForecastState);
 
-	const formatedWeatherList = data?.map((weather, index) => ({
-		...weather,
-		dt_txt: index === 0 ? "Today" : index === 1 ? "Tomorrow" : getWeekDay(new Date(weather.dt_txt).getDay()),
-	}));
-
 	useEffect(() => {
-		if (Object.keys(selectedDayForecast || {}).length === 0 && formatedWeatherList.length > 0) {
-			setSelectedDayForecast({ ...formatedWeatherList[0], id: 0 });
+		if (Object.keys(selectedDayForecast || {}).length === 0 && data.length > 0) {
+			setSelectedDayForecast({ ...data[0], id: 0 });
 		}
-	}, [formatedWeatherList]);
+	}, [data]);
 
 	return (
 		<Box w={{ base: 'full', lg: '350px' }} py={4} bg="blue.800" borderRadius="3xl">
@@ -31,11 +25,11 @@ export const WeatherSidebar = ({ isLoading, data }: WeatherSidebarProps) => {
 				</Center>
 			) : (
 				<Fragment>
-					{formatedWeatherList.length > 0 ? (
+					{data.length > 0 ? (
 						<Fragment>
 							<Heading as="h2" fontSize="2xl" px={6} mb={4}>{cityName}</Heading>
 
-							{formatedWeatherList.map((weatherInfo, index) => {
+							{data.map((weatherInfo, index) => {
 								const { temp_min, temp_max } = weatherInfo.main;
 								const { description, icon } = weatherInfo.weather[0];
 								const day = new Date(weatherInfo.dt_txt).getDay() || weatherInfo.dt_txt;

@@ -7,6 +7,8 @@ import { getCityLatAndLon, getCityWheater } from 'services/queries';
 
 import { cityNameState } from 'state/atoms';
 
+import { getWeekDay } from 'utils/formatDate';
+
 import { SearchCity } from 'components/SearchCity';
 import { WeatherResult } from 'components/WeatherResult';
 import { WeatherSidebar } from 'components/WeatherSidebar';
@@ -20,7 +22,7 @@ const App = () => {
 		data: cityData,
 	} = useMutation((city: string) => getCityLatAndLon(city));
 
-	const cityName = cityData?.data[0].name || "";
+	const cityName = cityData?.data[0]?.name || "";
 
 	const { isLoading: isLoadingWatherInfo, data: weatherData } = useQuery(
 		['weatherData', cityName],
@@ -44,7 +46,12 @@ const App = () => {
 			weatherData?.data?.list[32],
 		];
 
-		setWeatherList(weatherListNextFiveDays);
+		const formatedWeatherList = weatherListNextFiveDays?.map((weather, index) => ({
+			...weather,
+			dt_txt: index === 0 ? "Today" : index === 1 ? "Tomorrow" : getWeekDay(new Date(weather.dt_txt).getDay()),
+		}));
+
+		setWeatherList(formatedWeatherList);
 		setState(cityName);
 	}, [weatherData?.data]);
 
