@@ -19,8 +19,7 @@ export const WeatherSidebar = ({ isLoading, data }: WeatherSidebarProps) => {
 
 	useEffect(() => {
 		if (Object.keys(selectedDayForecast || {}).length === 0 && formatedWeatherList.length > 0) {
-			console.log(selectedDayForecast)
-			setSelectedDayForecast(formatedWeatherList[0]);
+			setSelectedDayForecast({ ...formatedWeatherList[0], id: 0 });
 		}
 	}, [formatedWeatherList]);
 
@@ -36,7 +35,7 @@ export const WeatherSidebar = ({ isLoading, data }: WeatherSidebarProps) => {
 						<Fragment>
 							<Heading as="h2" fontSize="2xl" px={6} mb={4}>{cityName}</Heading>
 
-							{formatedWeatherList.map((weatherInfo) => {
+							{formatedWeatherList.map((weatherInfo, index) => {
 								const { temp_min, temp_max } = weatherInfo.main;
 								const { description, icon } = weatherInfo.weather[0];
 								const day = new Date(weatherInfo.dt_txt).getDay() || weatherInfo.dt_txt;
@@ -47,8 +46,9 @@ export const WeatherSidebar = ({ isLoading, data }: WeatherSidebarProps) => {
 										justifyContent="space-between"
 										px={4}
 										cursor="pointer"
+										bg={selectedDayForecast.id === index ? "blue.900" : ""}
 										_hover={{ bg: "blue.900" }}
-										onClick={() => setSelectedDayForecast(weatherInfo)}
+										onClick={() => setSelectedDayForecast({ ...weatherInfo, id: index })}
 									>
 										<HStack>
 											<Image

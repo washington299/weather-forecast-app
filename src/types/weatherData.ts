@@ -32,6 +32,7 @@ type Sys = {
 }
 
 export type WeatherDataProps = {
+	id: number;
 	dt: number;
 	main: Main;
 	weather: Weather[];
