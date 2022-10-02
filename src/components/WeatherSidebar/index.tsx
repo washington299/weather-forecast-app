@@ -4,7 +4,6 @@ import { useRecoilValue, useRecoilState } from 'recoil';
 
 import { cityNameState, selectedDayForecastState } from 'state/atoms';
 
-
 import { WeatherSidebarProps } from './types';
 
 export const WeatherSidebar = ({ isLoading, data }: WeatherSidebarProps) => {
