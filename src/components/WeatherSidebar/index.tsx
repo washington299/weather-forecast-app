@@ -12,7 +12,7 @@ export const WeatherSidebar = ({ isLoading, data }: WeatherSidebarProps) => {
 	const cityName = useRecoilValue(cityNameState);
 	const [selectedDayForecast, setSelectedDayForecast] = useRecoilState(selectedDayForecastState);
 
-	const formatedWeatherList = data.map((weather, index) => ({
+	const formatedWeatherList = data?.map((weather, index) => ({
 		...weather,
 		dt_txt: index === 0 ? "Today" : index === 1 ? "Tomorrow" : getWeekDay(new Date(weather.dt_txt).getDay()),
 	}));
