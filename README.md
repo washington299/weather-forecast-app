@@ -2,7 +2,7 @@
 
 This is a Weather Forecast app where you can type the name of the city and see the weather on the next 5 days.
 
-## Techs used
+## Techs, libs and best practices used
 
 - ReactJs
 - Vite
@@ -10,6 +10,8 @@ This is a Weather Forecast app where you can type the name of the city and see t
 - Chakra Ui
 - React-query
 - Recoil
+- Convetional commits
+- Absolute paths
 
 ### How to run
 
