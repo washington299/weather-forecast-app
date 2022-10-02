@@ -21,6 +21,14 @@ To run the project, first clone this repostory and move to the file on your mach
 yarn
 ```
 
+After that you have to create an account on [Open api](https://openweathermap.org/), and create a private key to have access to api endpoints. After you have your key, create a ``.env.local`` file on the root of the project and paste this line:
+
+``
+VITE_OPEN_WEATHER_API_KEY=${API_KEY}
+``
+
+now replace the ``${API_KEY}`` with your private key from open api.
+
 Then to open the project locally run:
 
 ```
